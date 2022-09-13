@@ -1,0 +1,105 @@
+{% extends 'base.html' %} {% block body %}
+{% include 'crud.html' %}
+<style>
+	.checked {
+		color: orange;
+	}
+
+	h4 {
+		color: blue;
+		font-family: verdana;
+		font-size: 300%;
+	}
+	.row .col-md-4:hover {
+		box-shadow: 0 40px 60px -20px rgba(12, 5, 62, 0.15);
+		z-index: 100;
+	  }
+	  .row .col-md-4:hover .card-text{
+		color: #4e22d0;
+	  }
+</style>
+<div class="container my-4">
+	<div class="jumbotron">
+		<h1 class="text-center">{{category}}</h1>
+	</div>
+</div>
+
+<div class="g-mr-60 my-5" style="padding-left:1500px;">
+	<h2 class="h6 align-middle d-inline-block g-font-weight-400 text-uppercase" style="padding-top: 6px;">Sort by:</h2>
+
+	<!-- Secondary Button -->
+	<div class="d-inline-block btn-group g-line-height-1_2">
+	  <button type="button" class="btn dropdown-toggle g-font-weight-300" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		Select
+	  </button>
+	  <div class="dropdown-menu rounded-0" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 18px, 0px); top: 0px; left: 0px; will-change: transform;">
+		<a class="dropdown-item g-font-weight-200" href="/products/AtoZ">A to Z</a>
+		<a class="dropdown-item g-font-weight-200" href="/products/ZtoA">Z to A</a>
+		<a class="dropdown-item g-font-weight-200" href="/products/LowtoHigh">Price low to high</a>
+		<a class="dropdown-item g-font-weight-200" href="/products/HightoLow">price high to low</a>
+	  </div>
+	</div>
+	<!-- End Secondary Button -->
+</div> 
+<div class="album py-5 bg-light">
+	<div class="container my-4">
+		<div class="row">
+
+			{% for product in page_obj %}
+			<div class="col-md-4">
+				<div class="card mb-3 shadow-sm"> <a href="/productdetail/{{product.retailer_sku}}"> <img src={{product.image_url.1}} width="300" height="450" ,
+						class="d-block w-100" alt="..."> </a>
+					<div class="card-body">
+							<h5 class="card-text">{{product.name|truncatechars:37}}</h5>
+						<br> <span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> <span
+							class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span
+							class="fa fa-star"></span>
+						<p class="card-text my-0">{{product.color|upper}}</p>
+						<p class="card-text">{{product.price}} {{product.currency}}</p>
+						{% if user.is_superuser %}
+						<div class="d-flex justify-content-between align-items-center">
+							<div class="col-sm-12">
+								<a href="#editProductModal-{{forloop.counter}}" class="btn btn-sm btn-edit"
+									data-toggle="modal">Edit</a>
+								<a href="#deleteProductModal-{{forloop.counter}}" class="btn btn-sm btn-delete"
+									data-toggle="modal">Delete</a>
+								{% if product.status %}
+								<a href="/hide_product/{{product.retailer_sku}}/{{filter}}" class="btn btn-sm btn-hide">Hide</a>
+								{% else %}
+								<a href="/hide_product/{{product.retailer_sku}}/{{filter}}" class="btn btn-sm btn-show">Show</a>
+								{% endif %}
+							</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endfor %}	
+		</div>
+
+		<div class="pagination justify-content-center"> <span class="step-links">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+
+						{% if page_obj.has_previous %}
+						<li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+						<li class="page-item"><a class="page-link"
+								href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+						{% endif %}
+
+						<span class="current">
+							<li class="page-item disabled"><a class="page-link" href="#"> Page {{ page_obj.number }}
+									of {{ page_obj.paginator.num_pages }}</a></li>
+						</span>
+						{% if page_obj.has_next %}
+						<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+						</li>
+						<li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last
+								&raquo;</a> </li>
+						{% endif %}
+					</ul>
+				</nav>
+			</span>
+		</div>
+
+{% endblock body %}

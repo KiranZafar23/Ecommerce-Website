@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %} Search Results {% endblock title %}
+{% block blogactive %} active {% endblock blogactive %}
+
+
+{% block body %}
+<div class="container my-3">
+  <h2>Search results : </h2>
+  {% if query_products|length < 1 %}
+  <p>No search results</p>
+  Your search query : <b>{{query}}</b> did not match any documents. <br>
+  Suggestions:
+  <ul>
+    <li>Make sure that all words are spelled correctly.</li>
+    <li>Try more general keywords.</li>
+    <li> Try fewer keywords.</li>
+    <li> Try different keywords.</li>
+    </li>
+  </ul>
+  {% endif %}
+
+  <div class="album py-5 bg-light">
+    <div class="container my-4">
+      <div class="row">
+        {% for product in query_products  %}
+        {% if product.status %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img src={{product.image_url.1}} width="300" height="300" , class="d-block w-100" alt="...">
+            <div class="card-body">
+              <a href="/productdetail/{{product.retailer_sku}}" class="card-text">{{product.name}}</a>
+              <h6 class="card-text">{{product.color|upper}}</h6>
+              <h6 class="card-text">{{product.price}}</h6>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+
+          </div>
+        </div>
+        {%endif%}
+        {% endfor %}
+      </div>
+      {% endblock %}

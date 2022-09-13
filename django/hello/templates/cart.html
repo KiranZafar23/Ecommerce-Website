@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load cart %}
+{% load custom_filter %}
+<style>
+	@media (min-width: 1025px) {
+		.h-custom {
+		height: 100vh !important;
+		}
+		}
+		
+		.card-registration .select-input.form-control[readonly]:not([disabled]) {
+		font-size: 1rem;
+		line-height: 2.15;
+		padding-left: .75em;
+		padding-right: .75em;
+		}
+		
+		.card-registration .select-arrow {
+		top: 13px;
+		}
+		
+		.bg-grey {
+		background-color: #eae8e8;
+		}
+		
+		@media (min-width: 992px) {
+		.card-registration-2 .bg-grey {
+		border-top-right-radius: 16px;
+		border-bottom-right-radius: 16px;
+		}
+		}
+		
+		@media (max-width: 991px) {
+		.card-registration-2 .bg-grey {
+		border-bottom-left-radius: 16px;
+		border-bottom-right-radius: 16px;
+		}
+		}
+</style> 
+<section class="h-100 h-custom" style="background-color: #B2B9B8;">
+	<div class="container py-5 h-100">
+	  <div class="row d-flex justify-content-center align-items-center h-100">
+		<div class="col-12">
+		  <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+			<div class="card-body p-0">
+			  <div class="row g-0">
+				<div class="col-lg-8">
+				  <div class="p-5">
+					<div class="d-flex justify-content-between align-items-center mb-5">
+					  <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+					  <h6 class="mb-0 text-muted">{{request.session.cart.keys|length}} Items</h6>
+					</div>
+					{% for product in products%}
+					<hr class="my-4">
+  
+					<div class="row mb-4 d-flex justify-content-between align-items-center">
+					  <div class="col-md-2 col-lg-2 col-xl-2"> <a href="/productdetail/{{product.retailer_sku}}">
+						<img
+						  src="{{product.image_url.0}}"
+						  class="img-fluid rounded-3" alt="Cotton T-shirt"></a>
+					  </div>
+					  <div class="col-md-3 col-lg-3 col-xl-3">
+						<h6 class="text-muted">{{product.category}}</h6>
+						<h6 class="text-black mb-0">{{product.name}}</h6>
+					  </div>
+					  <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+						<form action="/update_cartpage" method="POST">
+							{% csrf_token %}
+						
+						<button class="btn btn-link px-2"
+						  onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+						  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
+						  </svg>
+						</button>
+  
+						<input id="quantity" min="1" max="5" name="quantity" value="{{product|cart_quantity:request.session.cart}}" type="number"
+						  class="form-control form-control-sm" />
+						  <input hidden type="text" name='product' value='{{product.retailer_sku}}'>  
+  
+						<button class="btn btn-link px-2"
+						  onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+						  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+						  </svg>
+						</button>
+						</form>
+					  </div>
+					  <div class="col-md-3 col-lg-2 col-xl-2">
+						<h6 class="mb-0">{{product.currency}} {{product.price}}</h6>
+					  </div>
+					  <div class="col-md-4 col-lg-2 col-xl-2">
+						<h6 class="mb-0">{{product|price_total:request.session.cart|currency}}</h6>
+					  </div>
+					  <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+						<a href="remove_item/{{product.retailer_sku}}" class="text-muted"><svg
+							xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+							class="bi bi-trash" viewBox="0 0 16 16">
+							<path
+								d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+							<path fill-rule="evenodd"
+								d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+						</svg></a>
+					  </div>
+					</div>
+					{% endfor %}
+					<hr class="my-4">
+  
+					<div class="pt-5">
+					  <h6 class="mb-0"><a href="/products/All" class="text-body"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+					  </svg>Go to Shop</a></h6>
+					</div>
+				  </div>
+				</div>
+				<div class="col-lg-4 bg-grey">
+				  <div class="p-5">
+					<h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+					<hr class="my-4">
+  
+					<div class="d-flex justify-content-between mb-4">
+					  <h5 class="text-uppercase">{{request.session.cart.keys|length}} Items </h5>
+					  <h5>{{products|total_cart_price:request.session.cart|currency}}</h5>
+					</div>
+  
+					<div class="d-flex justify-content-between mb-4">
+						<h5 class="text-uppercase">Shipping</h5>
+						<h5>USD 10</h5>
+					  </div>
+  
+					<div class="d-flex justify-content-between mb-5">
+					  <h5 class="text-uppercase">Total price</h5>
+					  <h5>{{products|total_cart_price:request.session.cart|add:"10"|currency}}</h5>
+					</div>
+  
+					{% if user.is_authenticated %}
+					<div  class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark"> <a href="#" data-toggle="modal" data-target="#checkoutModal"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+						<path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+					  </svg></a> Checkout</div>
+					{% else %}	
+					<div  class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark"> <a href="#" data-toggle="modal" data-target="#loginModal"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+						<path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+					  </svg></a>Checkout</div>
+
+					{% endif %}
+  
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </section>
+
+<!-- modal -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModal"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="checkoutModal">
+					Check Out Form
+				</h5>
+				<hr>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span
+						aria-hidden="true">&times;</span> </button>
+			</div>
+			<div class="modal-body">
+				<div class="m-2 p-3">
+					<form action="/check-out" method="POST"> {% csrf_token %}
+						<div class="form-group">
+							<label for="">Address</label>
+							<input type="text" name="address" id="address" class="form-control" placeholder=""
+								aria-describedby="helpId" required> </div>
+						<div class="form-group">
+							<label for="">Phone</label>
+							<input type="text" name="phone" id="phone" class="form-control" placeholder=""
+								aria-describedby="helpId" required> </div>
+						<input type="submit" class="btn float-right btn-outline-secondary col-lg-6" value="Check out">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> 
+
+{% endblock body %}

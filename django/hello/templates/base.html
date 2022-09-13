@@ -1,0 +1,297 @@
+<!doctype html> {% load static %}
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title> {% block title %}{% endblock title %} Shop Wize</title>
+</head>
+<style>
+	.btn-login {
+		color: #FFFFFF;
+		background-color: #566573;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		border-radius: 0;
+	}
+
+	.btn-edit {
+		background-color: #4C7C74;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		border-radius: 0;
+	}
+
+	.btn-show {
+		background-color: #3cb371;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		border-radius: 0;
+	}
+
+
+	.btn-hide {
+		background-color: #a0a0a0;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		border-radius: 0;
+	}
+
+	.btn-delete {
+		background-color: #DE5F6C;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		border-radius: 0;
+	}
+</style>
+
+<body>
+	<nav class="navbar navbar-expand-sm bg-secondary navbar-dark"> <a class="navbar-brand" href="#"><i
+				style="font-size:24px" class="fa">&#xf28a;</i>hop <i style="font-size:24px"
+				class="fa">&#xf266;</i>ize</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
+				class="navbar-toggler-icon"></span> </button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"> <a class="nav-link" href="/"><svg xmlns="http://www.w3.org/2000/svg"
+							width="25" height="25" fill="currentColor" class="bi bi-house-door-fill"
+							viewBox="0 0 16 16">
+							<path
+								d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z" />
+						</svg></a> </li>
+				{% if not user.is_superuser%}
+				<li class="nav-item active"> <a class="nav-link" href="/about"><svg xmlns="http://www.w3.org/2000/svg"
+							width="23" height="23" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+							<path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+							<path fill-rule="evenodd"
+								d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+							<path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+						</svg></a> </li>
+				<li class="nav-item active"> <a class="nav-link " href="/contact"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-text-fill" viewBox="0 0 16 16">
+					<path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM4.5 5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zm0 2.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zm0 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z"/>
+				  </svg></a> </li>
+				{% endif %}
+			</ul>
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"> <a class="nav-link" href="/products/All">All</a> </li>
+				<li class="nav-item dropdown active"> <a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+						Men
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						{% for category in categorys %}
+						{% if category.gender == 'Men' %}
+						<li><a class="dropdown-item" href="/products/{{category.name}}">{{category.name}}</a></li>
+						{% endif %}
+						{% endfor %}
+					</ul>
+				</li>
+				<li class="nav-item dropdown active"> <a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+						Women
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						{% for category in categorys %}
+						{% if category.gender == 'Women' %}
+						<li><a class="dropdown-item" href="/products/{{category.name}}">{{category.name}}</a></li>
+						{% endif %}
+						{% endfor %}
+					</ul>
+				</li>
+				<li class="nav-item dropdown active"> <a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+						Unisex Adults
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						{% for category in categorys %}
+						{% if category.gender == 'Unisex-adults' %}
+						<li><a class="dropdown-item" href="/products/{{category.name}}">{{category.name}}</a></li>
+						{% endif %}
+						{% endfor %} </ul>
+				</li>
+			</ul>
+
+			<form method="get" class="form-inline my-2 my-lg-0" action="/search">
+				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search" ,
+					name="query"> </form>
+			{% if not user.is_superuser %}
+			<ul class=" navbar-nav my-2 my-lg-0">
+				<li class="nav-item active"> <a class="nav-link" href="/cart"><svg xmlns="http://www.w3.org/2000/svg"
+							width="25" height="25" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+							<path
+								d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z" />
+						</svg>
+						<span class="badge bg-warning text-dark">{{request.session.cart.keys|length}}</span>
+						<span class="sr-only">(current)</span></a> </li>
+			</ul>
+			{% endif %}
+			{% if user.is_authenticated %}
+			<ul class=" navbar-nav my-2 my-lg-0">
+				<li class="nav-item active"> <a class="nav-link" href="/orders">Orders<span
+							class="sr-only">(current)</span></a> </li>
+			</ul>
+
+			<ul class="navbar-nav mr-2">
+				<li class="nav-item dropdown active"> <a class="nav-link dropdown-toggle" href='#' id="navbarDropdown"
+						role="button" data-toggle="dropdown"> Welcome {{request.user}}</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/logout"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+								height="18" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+								<path fill-rule="evenodd"
+									d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+								<path fill-rule="evenodd"
+									d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+							</svg> Logout</a>
+						{% if user.is_superuser %}
+						<a class="dropdown-item" href="/uploadfile"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+								height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+								<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+								<path
+									d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+							</svg> Data</a>
+						<a class="dropdown-item" data-target="#addProductModal" data-toggle="modal"><svg
+								xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-plus-circle" viewBox="0 0 16 16">
+								<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+								<path
+									d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+							</svg> Product</a>
+						{% endif %}
+					</div>
+				</li>
+			</ul>
+		</div>
+		{% else %}
+		<button type="button" class="btn btn-login mr-2" data-toggle="modal" data-target="#loginModal"> Login <svg
+				xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+				class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+				<path fill-rule="evenodd"
+					d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+				<path fill-rule="evenodd"
+					d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+			</svg>
+		</button>
+		<button type="button" class="btn btn-login mr-2" data-toggle="modal" data-target="#signupModal"> SignUp <svg
+				xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+				class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+				<path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+				<path fill-rule="evenodd"
+					d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+			</svg>
+		</button>
+		{% endif %} </div>
+	</nav>
+	{% for message in messages %}
+	<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert"> <strong>Message : </strong>
+		{{ message }}
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+				aria-hidden="true">&times;</span> </button>
+	</div>
+	{% endfor %}
+
+<!-- SignUp Modal -->
+	<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="signupModalTitle">SignUp Here</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span
+							aria-hidden="true">&times;</span> </button>
+				</div>
+				<div class="modal-body">
+					<form action="/signup" method='post'>
+						<div class="form-group">
+							<label for="username">Username</label>
+							<input type="text" class="form-control" id="username" name="username"
+								placeholder="Choose a unique username" required> </div>
+						<div class="form-group">
+							<label for="fname">First Name</label>
+							<input type="text" class="form-control" id="fname" name="fname"
+								placeholder="First Name" required> </div>
+						<div class="form-group">
+							<label for="lname">Last Name</label>
+							<input type="text" class="form-control" id="lname" name="lname"
+								placeholder="Last Name" required> </div>
+						<div class="form-group">
+							<label for="email">Email address</label>
+							<input type="email" class="form-control" id="email" name="email"
+								placeholder="name@example.com" required> </div>
+						<div class="form-group">
+							<label for="pass1">Password</label>
+							<input type="password" class="form-control" id="pass1" name="pass1"
+								placeholder="Password" required> </div>
+						<div class="form-group">
+							<label for="pass2">Confirm Password</label>
+							<input type="password" class="form-control" id="pass2" name="pass2"
+								placeholder="Confirm Password" required> </div>
+						<div class="modal-footer d-flex justify-content-center">
+							<div class="signup-section">Already have an account? <a href="#" data-toggle="modal" data-target="#loginModal">Login</a></div>
+						</div>	 {% csrf_token %}
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+				<div class="modal-footer"> </div>
+			</div>
+		</div>
+	</div>
+	{% block body %}
+	{% endblock body %}
+	
+
+	<!-- Login Modal -->
+	<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="loginModalTitle">Login Here</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span
+							aria-hidden="true">&times;</span> </button>
+				</div>
+				<div class="modal-body">
+					<form action="/login" method="POST">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="username">Username</label>
+							<input type="text" class="form-control" id="loginusername" name="loginusername"
+								placeholder="Enter your username " required> </div>
+						<div class="form-group">
+							<label for="pass">Password </label>
+							<input type="password" class="form-control" id="loginpassword" name="loginpassword"
+								placeholder="Enter your password " required> </div>
+						<div class="modal-footer d-flex justify-content-center">
+							<div class="signup-section">Not a member yet? <a href="#" data-toggle="modal" data-target="#signupModal"> Sign Up</a></div>
+						</div>	
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer"> </div>
+	
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+	</script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+
+</html>

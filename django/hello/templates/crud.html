@@ -1,0 +1,343 @@
+{% block body %}
+<style>
+select {
+	width: 350px;
+	height: 40px;
+	line-height: 40px;
+	-webkit-appearance: menulist-button;  
+	-moz-appearance:none;
+	}
+</style>
+<!-- Edit Modal HTML -->
+{% for product in products %}
+<div id="editProductModal-{{forloop.counter}}" class="modal fade">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<form action="/update/{{product.retailer_sku}}/{{filter}}" method="post">
+				{% csrf_token %}
+				<div class="modal-header">
+					<h3 class="modal-title">Edit Product</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Brand</label>
+						<input value="{{product.brand}}" name="brand" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Name</label>
+						<input value="{{product.name}}" name="name" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Color</label>
+						<input value="{{product.color}}" name="color" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Gender</label>
+						<input value="{{product.gender}}" name="gender" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Category</label>
+						<input value="{{product.category}}" name="category" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Price</label>
+						<input value="{{product.price}}" name="price" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Description</label>
+						<input value="{{product.description}}" name="description" type="text" class="form-control"
+							required>
+					</div>
+					<div class="form-group">
+						<label>Care</label>
+						<input value="{{product.care}}" name="care" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Url </label>
+						<input value="{{product.url}}" name="url" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Currency</label>
+						<input value="{{product.currency}}" name="currency" type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Image Urls</label>
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-lg-12">
+								{% for url in product.image_url %}
+								<div id="inputFormRow">
+									<div class="input-group mb-3">
+										<input type="text" name="image_urls" id="image_urls" value="{{url}}" class="form-control m-input" placeholder="Enter url" autocomplete="off">
+										<div class="input-group-append">
+											<button id="removeRow" type="button" class="btn btn-delete">x</button>
+										</div>
+									</div>
+								</div>
+								{% endfor %}
+								<div id="newUrlRow"></div>
+								<div>
+								<button id="editUrlRow" type="button" class="btn btn-info">+</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Skus</label>
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-lg-12">
+								{% for sku in product.skus %}
+								<div id="inputFormRow">
+									<div class="input-group mb-2">
+										<label style="padding-left: 15px; padding-top: 6px; padding-right: 13px;">OutofStock:</label>
+										<select name="skusStock" class="form-select" aria-label="">
+											<option name="skusStock" id="skus" selected >{{sku.out_of_stock}}</option>
+											{% if sku.out_of_stock %}
+											<option name="skusStock" id="skus">False</option>
+											{% else %}
+											<option name="skusStock" id="skus">True</option>
+											{% endif %}
+										</select>
+										<label style="padding-left: 25px; padding-top: 6px; padding-right: 13px;">Size: </label>
+											<input type="text" name="skusSize" id="skusSize" value="{{sku.size}}" class="form-control m-input" placeholder="Enter url" autocomplete="off">
+										<div class="input-group-append">
+											<button id="removeRow" type="button" class="btn btn-delete">x</button>
+										</div>
+									</div>
+								</div>
+								{% endfor %}
+								<div id="newskuRow"></div>
+								<div>
+								<button id="editskuRow" type="button" class="btn btn-info">+</button>
+								</div>
+							</div>
+						</div>
+					</div> 
+
+				</div>
+
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+					<input type="submit" class="btn btn-info" value="Update">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+	<!-- Add Modal HTML -->
+	<div id="addProductModal" class="modal fade">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<form action="/add/{{filter}}" method="post">
+					{% csrf_token %}
+					<div class="modal-header">
+						<h3 class="modal-title">Add Product</h3>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Retailer Sku</label>
+							<input name="retailer_sku" type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Brand</label>
+							<input name="brand" type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Name</label>
+							<input name="name" type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Color</label>
+							<input name="color" type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Gender</label>
+							<input name="gender" type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Category</label>
+							<select name="category" class="form-select" aria-label="">
+								<option name="category" id="category">Men's Shirts</option>
+								<option name="category" id="category">Men's Pants &amp; Shorts</option>
+								<option name="category" id="category">Men's Polos, Tees &amp; Henleys</option>
+								<option name="category" id="category">Men's Blazers</option>
+								<option name="category" id="category">Men's Sweatshirts &amp; Sweaters</option>
+								<option name="category" id="category">Men's Suits</option>
+								<option name="category" id="category">Men's Active Kit System</option>
+								<option name="category" id="category">Men's Jackets &amp; Coats</option>
+								<option name="category" id="category">Men's Underwear &amp; Socks</option>
+								<option name="category" id="category">Women's Bottoms</option>
+								<option name="category" id="category">Women's Tops</option>
+								<option name="category" id="category">Women's Tees &amp; Tanks</option>
+								<option name="category" id="category">Women's Active Kit</option>
+								<option name="category" id="category">Women's Sweatshirts &amp; Sweaters</option>
+								<option name="category" id="category">Women's Blazers &amp; Cardigans</option>
+								<option name="category" id="category">Women's Outerwear</option>
+								<option name="category" id="category">Women's Suits</option>
+								<option name="category" id="category">Women's Dresses</option>
+								<option name="category" id="category">Maskº Program</option>
+								<option name="category" id="category">Accessories</option>
+								<option name="category" id="category">Socks</option>
+								<option name="category" id="category">Homeº</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Price</label>
+							<input name="price" type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Description</label>
+							<input name="description" type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Care</label>
+							<input name="care" type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Url</label>
+							<input name="url" type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Currency</label>
+							<input name="currency" type="text" class="form-control" required>
+						</div>
+
+						<div class="form-group">
+							<label>Image Urls</label>
+							<input type="text" name="image_urls" id="image_urls" value="" class="form-control m-input" placeholder="Enter url" autocomplete="off" required>
+							<input type="text" name="image_urls" id="image_urls" value="" class="form-control m-input" placeholder="Enter url" autocomplete="off" required>
+							<input type="text" name="image_urls" id="image_urls" value="" class="form-control m-input" placeholder="Enter url" autocomplete="off" required>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-12">
+									<div id="inputFormRow">
+										<div class="input-group mb-3">
+											<input type="text" name="image_urls" id="image_urls" value="" class="form-control m-input" placeholder="Enter url" autocomplete="off" required>
+											<div class="input-group-append">
+												<button id="removeRow" type="button" class="btn btn-delete">x</button>
+											</div>
+										</div>
+									</div>
+									<div id="newUrlRow"></div>
+									<div><button id="editUrlRow" type="button" class="btn btn-info">+</button></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>Skus</label>
+							<div class="input-group mb-2">
+							<label style="padding-left: 15px; padding-top: 6px; padding-right: 13px;">OutofStock:</label>
+							<select name="skusStock" class="form-select" aria-label="">
+								<option name="skusStock" id="skus">True</option>
+								<option name="skusStock" id="skus" selected>False</option>
+							</select>
+							<label style="padding-left: 25px; padding-top: 6px; padding-right: 13px;">Size:</label>
+							<input type="text" name="skusSize" id="skusSize" value="" class="form-control m-input" placeholder="Enter size" autocomplete="off" required>
+							</div>	
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-12">
+									<div id="inputFormRow">
+										<div class="input-group mb-2">
+											<label style="padding-left: 15px; padding-top: 6px; padding-right: 13px;">OutofStock:</label>
+											<select name="skusStock" class="form-select" aria-label="">
+												<option name="skusStock" id="skus">True</option>
+												<option name="skusStock" id="skus" selected>False</option>
+											</select>
+											<label style="padding-left: 25px; padding-top: 6px; padding-right: 13px;">Size:</label>
+											<input type="text" name="skusSize" id="skusSize" value="" class="form-control m-input" placeholder="Enter size" autocomplete="off" required>
+											<div class="input-group-append">
+												<button id="removeRow" type="button" class="btn btn-delete">x</button>
+											</div>
+										</div>	
+									</div>
+									<div id="newskuRow"></div>
+									<div><button id="editskuRow" type="button" class="btn btn-info">+</button></div>
+								</div>
+							</div>
+						</div> 	
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-info" value="Add">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+<!-- Delete Modal HTML -->
+{% for product in products %}
+<div id="deleteProductModal-{{forloop.counter}}" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<h3 class="modal-title">Delete Product</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure you want to delete {{product.name}} Product Record?</p>
+					<p class="text-warning"><small>This action cannot be undone.</small></p>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+					<a href="/delete/{{product.retailer_sku}}/{{filter}}" type="submit" class="btn btn-danger"> Delete
+					</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+
+<script type="text/javascript">
+{
+	$(document).on('click', '#editUrlRow', function (){
+		var html = '';
+		html +=  '<div id="inputFormRow">';
+		html += '<div class="input-group mb-3">';
+		html += '<input type="text" name="image_urls" class="form-control m-input" placeholder="Enter url" autocomplete="off" required>';
+		html += '<div class="input-group-append">';
+		html += '<button id="removeRow" type="button" class="btn btn-delete">x</button>';
+		html += '</div>';
+		html += '</div>'; 
+		html += '</div>'; 
+		$(this).parent().prev().append(html);
+	});
+
+	$(document).on('click', '#editskuRow', function (){
+		var html = '';
+		html += '<div id="inputFormRow">';
+		html += '<div class="input-group mb-3">';
+		html += '<label style="padding-left: 15px; padding-top: 6px; padding-right: 13px;">OutofStock:</label><select name="skusStock" class="form-select" aria-label=""><option name="skusStock" id="skus">False</option><option name="skusStock" id="skus">True</option></select>';
+		html += '<label style="padding-left: 25px; padding-top: 6px; padding-right: 13px;">Size:</label><input type="text" name="skusSize" id="skusSize" class="form-control m-input" placeholder="Enter Size" autocomplete="off" required>';
+		html += '<div class="input-group-append">';
+		html += '<button id="removeRow" type="button" class="btn btn-delete">x</button>';
+		html += '</div>';
+		html += '</div>';
+		html += '</div>'; 
+		$(this).parent().prev().append(html);
+	});
+
+
+	$(document).on('click', '#removeRow', function () {
+		$(this).closest('#inputFormRow').remove();
+	});
+}
+</script>
+	
+{% endblock body %} 
