@@ -6,4 +6,5 @@ djangorestframework==3.13.1
 requests==2.22.0
 requests-file==1.5.1
 gunicorn==19.0.0
+whitenoise==6.2.0
 
