@@ -32,8 +32,8 @@
 	}
 
 	.product img {
-		height: 19vh;
-		margin-bottom: 9px;
+		height: 16.1vh;
+		margin-bottom: 5px;
 		cursor: pointer;
 		opacity: 0.6;
 	}
@@ -212,16 +212,6 @@ label.radio input:disabled+span{border-color: #babdac;background-color: #babdac;
 				{% endif %}
 				{% endfor %}
 		
-			{% comment %} <h4>Size: <select name="size">
-					{% for size in product.skus %}
-					{% if size.out_of_stock %}
-					<option value="small" disabled>{{size.size}}</option>
-					{% else %}
-					<option value="small">{{size.size}}</option>
-					{% endif %}
-					{% endfor %}
-				</select></h4> {% endcomment %}
-		
 			<h3 class="mt-3 mb-4">Description: {{product.description}}</h3>
 
 			{% if not user.is_superuser %}
@@ -229,7 +219,7 @@ label.radio input:disabled+span{border-color: #babdac;background-color: #babdac;
 				{% csrf_token %}
 				{% if availability %}
 				<input hidden type="text" name='product' value='{{product.retailer_sku}}'>
-				<button type="submit" class="btn float-left btn-warning col-lg-2" id"cart"> Add to Cart <svg
+				<button type="submit" class="btn float-left btn-warning col-lg-auto" id"cart"> Add to Cart <svg
 						xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
 						class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
 						<path
@@ -246,7 +236,7 @@ label.radio input:disabled+span{border-color: #babdac;background-color: #babdac;
 
 				{% if not availability %}
 				<p style="color:red; font-size:20px; font-weight: bold; ">Out of Stock </p>
-				<button type="submit" class="btn float-left btn-warning col-lg-2" id"cart" disabled> Add to Cart <svg
+				<button type="submit" class="btn float-left btn-warning col-lg-auto" id"cart" disabled> Add to Cart <svg
 						xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
 						class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
 						<path
