@@ -24,10 +24,8 @@
 	</div>
 </div>
 
-<div class="g-mr-60 my-5" style="padding-left:1500px;">
+<div class="g-mr-60 p-5">
 	<h2 class="h6 align-middle d-inline-block g-font-weight-400 text-uppercase" style="padding-top: 6px;">Sort by:</h2>
-
-	<!-- Secondary Button -->
 	<div class="d-inline-block btn-group g-line-height-1_2">
 	  <button type="button" class="btn dropdown-toggle g-font-weight-300" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		Select
@@ -39,23 +37,10 @@
 		<a class="dropdown-item g-font-weight-200" href="/products/HightoLow">price high to low</a>
 	  </div>
 	</div>
-	<!-- End Secondary Button -->
 </div> 
-	{% comment %} <div class="h6 my-5 align-middle d-inline-block g-font-weight-400 text-uppercase" style="padding-left:1500px;">
-	  <label>Sort by: </label>
-	  <select name="sortby" style="width: 150px;" aria-label="">
-		<form method="POST" action="{% url '/products/' %}">
-			{% csrf_token %}
-		  <option name="sortby" id="sortby" selected>select</option>
-		  <option name="sortby" id="sortby" value="AtoZ">A to Z</option>
-		  <option name="sortby" id="sortby">Z to A</option>
-		  <option name="sortby" id="sortby">price low to high</option>
-		  <option name="sortby" id="sortby">price high to low</option>
-		</form>
-	  </select>
-	</div>   {% endcomment %}
+	
 <div class="album py-5 bg-light">
-	<div class="container my-4">
+	<div class="container my-0">
 		<div class="row">
 
 			{% for product in page_obj %}
